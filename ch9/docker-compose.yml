@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - /tmp/elasticsearch:/usr/share/elasticsearch/data
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    environment:
+      GF_INSTALL_PLUGINS: grafana-worldmap-panel
+    volumes:
+      - $PWD/grafana:/var/lib/grafana
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.5.1
+    volumes:
+      - $PWD/logstash:/usr/share/logstash/pipeline/
+      - $PWD/data:/data
