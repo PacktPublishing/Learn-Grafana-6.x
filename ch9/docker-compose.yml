@@ -16,6 +16,10 @@ services:
       - 3000:3000
     environment:
       GF_INSTALL_PLUGINS: grafana-worldmap-panel
+      GF_SMTP_ENABLED: "true"
+      GF_SMTP_USER: "<my@email.adddress>"
+      GF_SMTP_PASSWORD: "<my_smtp_pass_here>"
+      GF_SMTP_HOST: "<smtp_host_here:25>"
     volumes:
       - $PWD/grafana:/var/lib/grafana
 
