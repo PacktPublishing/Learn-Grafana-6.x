@@ -1,14 +1,38 @@
 IMAGE=sensors
 INDEX=cpu_metrics
 
-run-es:
-	docker-compose up elasticsearch
+build:
+	docker-compose pull grafana
 
-run-grafana:
-	docker-compose up grafana
+up:
+	docker-compose up -d grafana
 
-run-logstash:
-	docker-compose up logstash
+down:
+	docker-compose down
+
+start:
+	docker-compose start grafana
+
+stop:
+	docker-compose stop grafana
+
+restart:
+	docker-compose restart grafana
+
+clean:
+	docker-compose rm -vs
+
+build-logstash:
+	docker-compose pull logstash
+
+up-logstash:
+	docker-compose up -d logstash
+
+build-elasticsearch:
+	docker-compose pull elasticsearch
+
+up-elasticsearch:
+	docker-compose up -d elasticsearch
 
 es-describe:
 	curl -XGET localhost:9200/$(INDEX)/_mapping?pretty
@@ -24,3 +48,6 @@ docker-build:
 
 docker-run:
 	docker run --rm --network host -v "$$(PWD):/usr/src/app" $(IMAGE)
+
+run-powermetrics:
+	sudo powermetrics -i 60000 --format plist --samplers smc -u data/sample.plist
