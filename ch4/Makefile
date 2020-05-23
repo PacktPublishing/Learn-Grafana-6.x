@@ -1,3 +1,26 @@
-docker:
-	cp prometheus-grafana.yml /tmp/prometheus.yml
+build:
+	docker-compose pull
+
+up:
 	docker-compose up -d
+
+down:
+	docker-compose down
+
+start:
+	docker-compose start
+
+stop:
+	docker-compose stop
+
+build-%:
+	docker-compose pull $*
+
+up-%:
+	docker-compose up -d $*
+
+start-%:
+	docker-compose start $*
+
+stop-%:
+	docker-compose stop $*
