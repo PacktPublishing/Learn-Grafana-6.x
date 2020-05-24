@@ -1,24 +1,42 @@
 IMAGE=weather
+TAG=$(IMAGE)/ch5
 DB=weatherdb
 TEMPFILE=wx.txt
 STATIONS=KSFO,KDEN,KSTL,KJFK
 
-docker:
+build:
+	docker-compose pull
+
+up:
 	docker-compose up -d
 
-build:
-	docker build --pull --tag $(IMAGE) .
+down:
+	docker-compose down
 
-drop:
-	docker run --network=host $(IMAGE) --drop --db $(DB)
+start:
+	docker-compose start
 
-dump:
-	docker run --rm --network host -v "$$(PWD):/usr/src/app" $(IMAGE) --output $(TEMPFILE) --stations $(STATIONS)
+stop:
+	docker-compose stop
 
-load:
-	docker run --rm --network host -v "$$(PWD):/usr/src/app" $(IMAGE) --input $(TEMPFILE) --db $(DB)
+build-$(IMAGE):
+	docker build --pull --tag $(TAG) .
 
-reload: dump load
+dump-$(IMAGE):
+	docker run --rm --network=host -v "$$(PWD):/usr/src/app" --name $(IMAGE) $(TAG) \
+		--output $(TEMPFILE) --stations $(STATIONS)
 
-full-reload: drop dump load
+load-$(IMAGE):
+	docker run --rm --network=host -v "$$(PWD):/usr/src/app" --name $(IMAGE) $(TAG) \
+ 		--input $(TEMPFILE) --db $(DB)
 
+drop-$(IMAGE):
+	docker run --rm --network=host --name $(IMAGE) $(TAG) \
+ 		--drop --db $(DB)
+
+reload: dump-$(IMAGE) load-$(IMAGE)
+
+full-reload: drop-$(IMAGE) dump-$(IMAGE) load-$(IMAGE)
+
+test-influxdb:
+	curl -i http://localhost:8086/ping

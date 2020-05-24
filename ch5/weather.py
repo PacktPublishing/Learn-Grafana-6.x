@@ -83,7 +83,7 @@ def load_wx_data(db_host, db_port, db_name, input_file):
     data = input_file.read()
     response = requests.post(url, params=dict(db=db_name, precision="s"), data=data)
     if response.status_code != requests.codes.no_content:
-        raise Exception(f"input_wx_data: {response.status_code}:{response.reason}")
+        raise Exception(f"load_wx_data: {response.status_code}:{response.reason}")
 
 
 def escape_string(string):
@@ -125,6 +125,7 @@ def dump_wx_data(stations, output):
 def process_cli():
     parser = argparse.ArgumentParser(description="read forecast data from NWS into Influxdb")
     group = parser.add_mutually_exclusive_group()
+
     parser.add_argument('--host', dest='host', default='localhost',
                         help='database host')
     parser.add_argument('--port', dest='port', type=int, default=8086,
@@ -137,11 +138,11 @@ def process_cli():
                        help="input file")
     group.add_argument('--output', dest='output_file', type=argparse.FileType('w'),
                        help='output file')
+
     parser.add_argument('--stations', dest='stations',
                         help="list of stations to gather weather data from")
 
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 def main():
