@@ -5,7 +5,7 @@ networks:
 
 services:
   loki:
-    image: grafana/loki:latest
+    image: "grafana/loki:${LOKI_TAG-latest}"
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml
@@ -19,7 +19,7 @@ services:
         loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
 
   promtail:
-    image: grafana/promtail:latest
+    image: "grafana/promtail:${PROMT_TAG-latest}"
     ports:
       - "9080:9080"
     volumes:
@@ -34,7 +34,7 @@ services:
         loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
 
   prometheus:
-    image: prom/prometheus:latest
+    image: "prom/prometheus:${PROM_TAG-latest}"
     ports:
       - "9090:9090"
     volumes:
@@ -48,7 +48,7 @@ services:
         loki-url: "http://host.docker.internal:3100/loki/api/v1/push"
 
   grafana:
-    image: grafana/grafana:master
+    image: "grafana/grafana:${GRAF_TAG-latest}"
     ports:
       - "3000:3000"
     volumes:
