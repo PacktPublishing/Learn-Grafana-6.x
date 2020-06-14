@@ -1,5 +1,5 @@
 build:
-	docker-compose pull grafana
+	docker-compose pull
 
 up:
 	docker-compose up -d grafana
@@ -48,4 +48,6 @@ ldap-adduser:
  			-H ldap://localhost \
  			-D "cn=admin,dc=grafana,dc=org" \
 			-f /etc/ldap/slapd.d/assets/test/new-user.ldif
+
+auto: build up ldap-start ldap-query ldap-ssha-password ldap-adduser down
 

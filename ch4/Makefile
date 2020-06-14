@@ -24,3 +24,5 @@ start-%:
 
 stop-%:
 	docker-compose stop $*
+
+auto: build up-grafana up-prometheus down

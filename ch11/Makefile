@@ -19,3 +19,5 @@ restart:
 
 clean:
 	docker-compose rm -vs
+
+auto: build up down

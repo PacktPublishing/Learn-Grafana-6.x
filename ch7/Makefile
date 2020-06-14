@@ -40,3 +40,5 @@ full-reload: drop-$(IMAGE) dump-$(IMAGE) load-$(IMAGE)
 
 test-influxdb:
 	curl -i http://localhost:8086/ping
+
+auto: build up reload down

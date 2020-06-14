@@ -67,3 +67,4 @@ full-reload-earthquake: drop-earthquake reload-earthquake
 test-influxdb:
 	curl -i http://localhost:8086/ping
 
+auto: build up test-influxdb build-$(IMAGE) reload-weather reload-earthquake down

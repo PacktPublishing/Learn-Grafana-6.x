@@ -32,3 +32,5 @@ test-loki:
 
 test-promtail:
 	curl -XGET http://localhost:9080/ready
+
+auto: build up-grafana up-promtail up-loki test-promtail test-loki up-prometheus down

@@ -33,6 +33,9 @@ start-%:
 stop-%:
 	docker-compose stop $*
 
+$(CSVFILE):
+	gunzip $(CSVFILE).gz
+
 es-load-small: es-clean
 	head -$(SMALL) $(CSVFILE) | docker-compose run logstash logstash
 
@@ -53,3 +56,5 @@ es-query:
 
 es-clean:
 	curl -X DELETE "localhost:9200/$(INDEX)?pretty"
+
+auto: build up-grafana up-elasticsearch $(CSVFILE) es-load-all down
