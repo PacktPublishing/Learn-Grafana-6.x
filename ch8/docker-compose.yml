@@ -8,17 +8,17 @@ services:
     environment:
       - discovery.type=single-node
     volumes:
-      - $PWD/elasticsearch:/usr/share/elasticsearch/data
+      - "${PWD-.}/elasticsearch:/usr/share/elasticsearch/data"
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.7.0
     volumes:
-      - $PWD/logstash:/usr/share/logstash/pipeline/
-      - $PWD/data:/data
+      - "${PWD-.}/logstash:/usr/share/logstash/pipeline"
+      - "${PWD-.}/data:/data"
 
   grafana:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
     volumes:
-      - $PWD/grafana:/var/lib/grafana
+      - "${PWD-.}/grafana:/var/lib/grafana"

@@ -6,11 +6,11 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - $PWD/grafana:/var/lib/grafana
+      - "${PWD-.}/grafana:/var/lib/grafana"
 
   prometheus:
     image: "prom/prometheus:${PROM_TAG-latest}"
     ports:
       - "9090:9090"
     volumes:
-      - $PWD/prometheus:/etc/prometheus
+      - "${PWD-.}/prometheus:/etc/prometheus"

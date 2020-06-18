@@ -9,8 +9,8 @@ services:
       LDAP_ORGANISATION: "My Grafana Company"
       LDAP_DOMAIN: "grafana.org"
     volumes:
-      - $PWD/ldap:/var/lib/ldap
-      - $PWD/slapd.d:/etc/ldap/slapd.d
+      - "${PWD-.}/ldap:/var/lib/ldap"
+      - "${PWD-.}/slapd.d:/etc/ldap/slapd.d"
 
   grafana:
     image: grafana/grafana:latest
@@ -19,7 +19,7 @@ services:
     environment:
       GF_PATHS_CONFIG: "/etc/grafana/grafana.ini"
     volumes:
-      - $PWD/grafana/data:/var/lib/grafana
-      - $PWD/grafana/etc:/etc/grafana
+      - "${PWD-.}/grafana/data:/var/lib/grafana"
+      - "${PWD-.}/grafana/etc:/etc/grafana"
     depends_on:
       - ldap

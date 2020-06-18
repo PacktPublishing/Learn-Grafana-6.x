@@ -14,7 +14,7 @@ services:
       GF_RENDERING_CALLBACK_URL: http://grafana:3000/
       GF_LOG_FILTERS: rendering:debug
     volumes:
-      - $PWD/grafana:/var/lib/grafana
+      - "${PWD-.}/grafana:/var/lib/grafana"
 
   renderer:
     image: grafana/grafana-image-renderer:latest
@@ -28,10 +28,10 @@ services:
     environment:
       - discovery.type=single-node
     volumes:
-      - /tmp/elasticsearch:/usr/share/elasticsearch/data
+      - "${PWD-.}/elasticsearch:/usr/share/elasticsearch/data"
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.5.1
     volumes:
-      - $PWD/logstash:/usr/share/logstash/pipeline/
-      - $PWD/data:/data
+      - "${PWD-.}/logstash:/usr/share/logstash/pipeline"
+      - "${PWD-.}/data:/data"

@@ -8,4 +8,4 @@ services:
     environment:
       GF_USERS_ALLOW_SIGN_UP: "true"
     volumes:
-      - $PWD/grafana:/var/lib/grafana
+      - "${PWD-.}/grafana:/var/lib/grafana"

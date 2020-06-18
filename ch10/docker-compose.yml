@@ -12,7 +12,7 @@ services:
     networks:
       - loki
     volumes:
-      - $PWD/loki:/loki
+      - "${PWD-.}/loki:/loki"
     logging:
       driver: loki
       options:
@@ -24,7 +24,7 @@ services:
       - "9080:9080"
     volumes:
       - /private/var/log:/var/log
-      - $PWD/promtail:/etc/promtail
+      - "${PWD-.}/promtail:/etc/promtail"
     command: -config.file=/etc/promtail/docker-config.yaml
     networks:
       - loki
@@ -38,7 +38,7 @@ services:
     ports:
       - "9090:9090"
     volumes:
-      - $PWD/prometheus:/etc/prometheus
+      - "${PWD-.}/prometheus:/etc/prometheus"
     command: --config.file=/etc/prometheus/prometheus.yaml
     networks:
       - loki
@@ -52,7 +52,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - $PWD/grafana:/var/lib/grafana
+      - "${PWD-.}/grafana:/var/lib/grafana"
     networks:
       - loki
     logging:
