@@ -33,4 +33,8 @@ test-loki:
 test-promtail:
 	curl -XGET http://localhost:9080/ready
 
+docker-plugin:
+	docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+	docker plugin ls
+
 auto: build up-grafana up-promtail up-loki test-promtail test-loki up-prometheus down
